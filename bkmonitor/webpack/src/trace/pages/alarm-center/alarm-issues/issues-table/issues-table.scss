@@ -33,6 +33,10 @@
   .issues-name-col {
     min-width: 0;
 
+    &.is-resolved {
+      container: resolved-issue / inline-size;
+    }
+
     .issues-name-title {
       display: flex;
       gap: 6px;
@@ -41,6 +45,18 @@
       font-size: 13px;
       font-weight: 500;
       line-height: 24px;
+
+      // 窄列中给标题和圆勾单独留一行，避免徽标或编辑按钮溢出到下一列。
+      @container resolved-issue (max-width: 112px) {
+        flex-wrap: wrap;
+        row-gap: 0;
+        height: auto;
+
+        .issue-name-cell-view,
+        .issue-name-cell-editing {
+          flex-basis: 100%;
+        }
+      }
 
       .issues-type-tag {
         display: inline-flex;
@@ -326,13 +342,12 @@
     }
   }
 
-  // ===================== 结束状态行样式（通过 rowClassName 添加 is-ended） =====================
   .is-split-highlighted {
     background-color: #ebfaf0;
   }
 
-  .is-ended {
-    /** 结束状态 ISSUE 透明度 */
+  .is-archived {
+    /** 已归档 Issue 透明度 */
     $ended-opacity-icon: 0.2; // ICON / 趋势图 / 等级 → 20%
     $ended-opacity-text: 0.4; // 其他文字信息 → 40%
 
